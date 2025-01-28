@@ -123,11 +123,11 @@ def main_menu():
     menu_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Выберите параметры игры")
 
-    selected_field = 0
+    sel_pol = 0
     selected_color1 = player_colors[0]
     selected_color2 = player_colors[1]
-    selected_color1_name = player_color_names[0]
-    selected_color2_name = player_color_names[1]
+    selected_color1_n = player_color_names[0]
+    selected_color2_n = player_color_names[1]
     selected_goals = 5
 
     running = True
@@ -139,34 +139,34 @@ def main_menu():
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    selected_field = (selected_field - 1) % len(fields)
+                    sel_pol = (sel_pol - 1) % len(fields)
                 elif event.key == pygame.K_DOWN:
-                    selected_field = (selected_field + 1) % len(fields)
+                    sel_pol = (sel_pol + 1) % len(fields)
                 elif event.key == pygame.K_RIGHT:
 
 
-                    selected_color1_index = player_color_names.index(
-                        selected_color1_name)
-                    selected_color1_index = (
-                        selected_color1_index + 1) % len(player_color_names)
-                    selected_color1_name = player_color_names[selected_color1_index]
-                    selected_color1 = player_colors[selected_color1_index]
+                    selected_color1_ind = player_color_names.index(
+                        selected_color1_n)
+                    selected_color1_ind = (
+                        selected_color1_ind + 1) % len(player_color_names)
+                    selected_color1_n = player_color_names[selected_color1_ind]
+                    selected_color1 = player_colors[selected_color1_ind]
                 elif event.key == pygame.K_LEFT:
 
-                    selected_color1_index = player_color_names.index(
-                        selected_color1_name)
-                    selected_color1_index = (
-                        selected_color1_index - 1) % len(player_color_names)
-                    selected_color1_name = player_color_names[selected_color1_index]
-                    selected_color1 = player_colors[selected_color1_index]
+                    selected_color1_ind = player_color_names.index(
+                        selected_color1_n)
+                    selected_color1_ind = (
+                        selected_color1_ind - 1) % len(player_color_names)
+                    selected_color1_n = player_color_names[selected_color1_ind]
+                    selected_color1 = player_colors[selected_color1_ind]
                 elif event.key == pygame.K_SPACE:
 
-                    selected_color2_index = player_color_names.index(
-                        selected_color2_name)
-                    selected_color2_index = (
-                        selected_color2_index + 1) % len(player_color_names)
-                    selected_color2_name = player_color_names[selected_color2_index]
-                    selected_color2 = player_colors[selected_color2_index]
+                    selected_color2_ind = player_color_names.index(
+                        selected_color2_n)
+                    selected_color2_ind = (
+                        selected_color2_ind + 1) % len(player_color_names)
+                    selected_color2_n = player_color_names[selected_color2_ind]
+                    selected_color2 = player_colors[selected_color2_ind]
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -175,11 +175,11 @@ def main_menu():
                         selected_goals = 1
 
         field_text = font.render(
-            f"Поле: {fields[selected_field]}", True, WHITE)
+            f"Поле: {fields[sel_pol]}", True, WHITE)
         color_text1 = font.render(
-            f"Цвет игрока 1: {selected_color1_name}", True, WHITE)
+            f"Цвет игрока 1: {selected_color1_n}", True, WHITE)
         color_text2 = font.render(
-            f"Цвет игрока 2: {selected_color2_name}", True, WHITE)
+            f"Цвет игрока 2: {selected_color2_n}", True, WHITE)
         goals_text = font.render(
             f"Голов до победы: {selected_goals}", True, WHITE)
         start_text = font.render("Нажмите Enter для начала игры", True, WHITE)
@@ -199,7 +199,7 @@ def main_menu():
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
-            return fields[selected_field], selected_color1, selected_color2, selected_goals
+            return fields[sel_pol], selected_color1, selected_color2, selected_goals
 
     pygame.quit()
 
