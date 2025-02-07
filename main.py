@@ -142,58 +142,45 @@ def main_menu():
                     sel_pol = (sel_pol - 1) % len(fields)
                 elif event.key == pygame.K_DOWN:
                     sel_pol = (sel_pol + 1) % len(fields)
-                elif event.key == pygame.K_RIGHT:
-
-
-                    selected_color1_ind = player_color_names.index(
-                        selected_color1_n)
-                    selected_color1_ind = (
-                        selected_color1_ind + 1) % len(player_color_names)
+                elif event.key == pygame.K_a:  # Для игрока 1 - влево
+                    selected_color1_ind = player_color_names.index(selected_color1_n)
+                    selected_color1_ind = (selected_color1_ind - 1) % len(player_color_names)
                     selected_color1_n = player_color_names[selected_color1_ind]
                     selected_color1 = player_colors[selected_color1_ind]
-                elif event.key == pygame.K_LEFT:
-
-                    selected_color1_ind = player_color_names.index(
-                        selected_color1_n)
-                    selected_color1_ind = (
-                        selected_color1_ind - 1) % len(player_color_names)
+                elif event.key == pygame.K_d:  # Для игрока 1 - вправо
+                    selected_color1_ind = player_color_names.index(selected_color1_n)
+                    selected_color1_ind = (selected_color1_ind + 1) % len(player_color_names)
                     selected_color1_n = player_color_names[selected_color1_ind]
                     selected_color1 = player_colors[selected_color1_ind]
-                elif event.key == pygame.K_SPACE:
-
-                    selected_color2_ind = player_color_names.index(
-                        selected_color2_n)
-                    selected_color2_ind = (
-                        selected_color2_ind + 1) % len(player_color_names)
+                elif event.key == pygame.K_LEFT:  # Для игрока 2 - влево
+                    selected_color2_ind = player_color_names.index(selected_color2_n)
+                    selected_color2_ind = (selected_color2_ind - 1) % len(player_color_names)
                     selected_color2_n = player_color_names[selected_color2_ind]
                     selected_color2 = player_colors[selected_color2_ind]
+                elif event.key == pygame.K_RIGHT:  # Для игрока 2 - вправо
+                    selected_color2_ind = player_color_names.index(selected_color2_n)
+                    selected_color2_ind = (selected_color2_ind + 1) % len(player_color_names)
+                    selected_color2_n = player_color_names[selected_color2_ind]
+                    selected_color2 = player_colors[selected_color2_ind]
+                elif event.key == pygame.K_LSHIFT:  # Левый Shift для выбора поля
+                    sel_pol = (sel_pol + 1) % len(fields)
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
+                elif event.key == pygame.K_SPACE:
                     selected_goals += 1
                     if selected_goals > 10:
                         selected_goals = 1
 
-        field_text = font.render(
-            f"Поле: {fields[sel_pol]}", True, WHITE)
-        color_text1 = font.render(
-            f"Цвет игрока 1: {selected_color1_n}", True, WHITE)
-        color_text2 = font.render(
-            f"Цвет игрока 2: {selected_color2_n}", True, WHITE)
-        goals_text = font.render(
-            f"Голов до победы: {selected_goals}", True, WHITE)
+        field_text = font.render(f"Поле: {fields[sel_pol]}", True, WHITE)
+        color_text1 = font.render(f"Цвет игрока 1: {selected_color1_n}", True, WHITE)
+        color_text2 = font.render(f"Цвет игрока 2: {selected_color2_n}", True, WHITE)
+        goals_text = font.render(f"Голов до победы: {selected_goals}", True, WHITE)
         start_text = font.render("Нажмите Enter для начала игры", True, WHITE)
 
-        menu_screen.blit(field_text, (SCREEN_WIDTH // 2 -
-                         field_text.get_width() // 2, 150))
-        menu_screen.blit(color_text1, (SCREEN_WIDTH // 2 -
-                         color_text1.get_width() // 2, 200))
-        menu_screen.blit(color_text2, (SCREEN_WIDTH // 2 -
-                         color_text2.get_width() // 2, 250))
-        menu_screen.blit(goals_text, (SCREEN_WIDTH // 2 -
-                         goals_text.get_width() // 2, 300))
-        menu_screen.blit(start_text, (SCREEN_WIDTH // 2 -
-                         start_text.get_width() // 2, 400))
+        menu_screen.blit(field_text, (SCREEN_WIDTH // 2 - field_text.get_width() // 2, 150))
+        menu_screen.blit(color_text1, (SCREEN_WIDTH // 2 - color_text1.get_width() // 2, 200))
+        menu_screen.blit(color_text2, (SCREEN_WIDTH // 2 - color_text2.get_width() // 2, 250))
+        menu_screen.blit(goals_text, (SCREEN_WIDTH // 2 - goals_text.get_width() // 2, 300))
+        menu_screen.blit(start_text, (SCREEN_WIDTH // 2 - start_text.get_width() // 2, 400))
 
         pygame.display.flip()
 
@@ -202,6 +189,7 @@ def main_menu():
             return fields[sel_pol], selected_color1, selected_color2, selected_goals
 
     pygame.quit()
+
 
 
 def game_over_menu(score1, score2):
@@ -242,11 +230,9 @@ def game_loop(field_type, player1_color, player2_color, max_goals):
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("2D Футбол")
 
-
     all_sprites = pygame.sprite.Group()
     player1 = Player(player1_color, 'player1', 50, SCREEN_HEIGHT // 2)
-    player2 = Player(player2_color, 'player2',
-                     SCREEN_WIDTH - 100, SCREEN_HEIGHT // 2)
+    player2 = Player(player2_color, 'player2', SCREEN_WIDTH - 100, SCREEN_HEIGHT // 2)
     ball = Ball()
 
     all_sprites.add(player1, player2, ball)
@@ -254,6 +240,11 @@ def game_loop(field_type, player1_color, player2_color, max_goals):
     clock = pygame.time.Clock()
     score1 = 0
     score2 = 0
+
+    goal_width = 100
+    goal_depth = 20
+    goal_left_rect = pygame.Rect(0, SCREEN_HEIGHT // 2 - goal_width // 2, goal_depth, goal_width)
+    goal_right_rect = pygame.Rect(SCREEN_WIDTH - goal_depth, SCREEN_HEIGHT // 2 - goal_width // 2, goal_depth, goal_width)
 
     running = True
     while running:
@@ -266,12 +257,13 @@ def game_loop(field_type, player1_color, player2_color, max_goals):
         ball.bounce(player1)
         ball.bounce(player2)
 
-        if ball.rect.left <= 0:
+        # Проверка попадания в ворота
+        if ball.rect.colliderect(goal_left_rect):  # Левые ворота
             score2 += 1
             ball.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
             ball.speed_x = 0
             ball.speed_y = 0
-        if ball.rect.right >= SCREEN_WIDTH:
+        if ball.rect.colliderect(goal_right_rect):  # Правые ворота
             score1 += 1
             ball.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
             ball.speed_x = 0
@@ -287,19 +279,14 @@ def game_loop(field_type, player1_color, player2_color, max_goals):
         pygame.draw.line(screen, WHITE, (SCREEN_WIDTH // 2, 0),
                          (SCREEN_WIDTH // 2, SCREEN_HEIGHT), 5)
 
-        goal_width = 100
-        goal_depth = 20
-        pygame.draw.rect(screen, WHITE, (0, SCREEN_HEIGHT //
-                         2 - goal_width // 2, goal_depth, goal_width))
-        pygame.draw.rect(screen, WHITE, (SCREEN_WIDTH - goal_depth,
-                         SCREEN_HEIGHT // 2 - goal_width // 2, goal_depth, goal_width))
+        pygame.draw.rect(screen, WHITE, goal_left_rect)
+        pygame.draw.rect(screen, WHITE, goal_right_rect)
 
         all_sprites.draw(screen)
 
         font = pygame.font.Font(None, 36)
         score_text = font.render(f"Счет: {score1} : {score2}", True, WHITE)
-        screen.blit(score_text, (SCREEN_WIDTH // 2 -
-                    score_text.get_width() // 2, 10))
+        screen.blit(score_text, (SCREEN_WIDTH // 2 - score_text.get_width() // 2, 10))
 
         pygame.display.flip()
 
