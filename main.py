@@ -170,10 +170,10 @@ def main_menu():
                     if selected_goals > 10:
                         selected_goals = 1
 
-        field_text = font.render(f"Поле: {fields[sel_pol]}", True, WHITE)
-        color_text1 = font.render(f"Цвет игрока 1: {selected_color1_n}", True, WHITE)
-        color_text2 = font.render(f"Цвет игрока 2: {selected_color2_n}", True, WHITE)
-        goals_text = font.render(f"Голов до победы: {selected_goals}", True, WHITE)
+        field_text = font.render(f"Поле: {fields[sel_pol]} (Стрелочка в верх)", True, WHITE)
+        color_text1 = font.render(f"Цвет игрока 1: {selected_color1_n} (A и D)", True, WHITE)
+        color_text2 = font.render(f"Цвет игрока 2: {selected_color2_n} (Стрелочки влево и вправо)", True, WHITE)
+        goals_text = font.render(f"Голов до победы: {selected_goals} (Пробел)", True, WHITE)
         start_text = font.render("Нажмите Enter для начала игры", True, WHITE)
 
         menu_screen.blit(field_text, (SCREEN_WIDTH // 2 - field_text.get_width() // 2, 150))
